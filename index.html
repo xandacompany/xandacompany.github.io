@@ -13,7 +13,6 @@
 
     <title> XandA | Inicio</title>
     <link rel="stylesheet" href="Css/main.css">
-    <link rel="stylesheet" href="Css/mainventas.css">
 
     <link rel="icon" href="Img/logo2.png"type="png/img">
 </head>
@@ -130,7 +129,7 @@
     
             </div>
             <div class="contenedor_final">
-                <p class="final_texto">Whatsapp</p>
+                <p class="final_texto" onClick="javascript:vinculowhatsapp()">Whatsapp</p>
                 <img src="Img/qrwhatsapp.png" class="final_imagen">
             </div>
         </div>
@@ -153,6 +152,10 @@
 
         function conocer(){
             location.href="#contenido";
+        }
+
+        function vinculowhatsapp(){
+            location.href="https://wa.me/525536980694";
         }
     </script>
 </body>
