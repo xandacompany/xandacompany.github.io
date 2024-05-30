@@ -16,7 +16,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-content: center;
+            align-content: space-between;
         }
         
         .form {
@@ -36,7 +36,7 @@
         .input_fomrulario {
             border-radius: 10px;
             border: 1px #cccccc solid;
-            width: 40%;
+            width:50px;
             height: 30px;
             color: #000000;
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -56,7 +56,12 @@
             flex-wrap: wrap;
             justify-content: center;
             align-content: center;
-            grid-gap: 20px 20px;
+            grid-gap: 25px 25px;
+        }
+
+        .contenedor_form {
+            width: 300px !important;
+          
         }
         
         .boton_formulario {
@@ -136,6 +141,10 @@
                 cursor: pointer;
                 border: 1px #cccccc solid;
             }
+
+            .ancho{
+                width: 300px !important;
+            }
         }
     </style>
 </head>
@@ -148,21 +157,43 @@
             <div class="contenedor_boton" style="margin-top: 50px;">
                 <img src="https://mundoejecutivo.github.io/assets/images/mundo50negros.png" alt="Mundo Ejecutivo 50 años" title="Mundo Ejecutivo 50 años" class="logo_imagen">
             </div>
+            <div class="">
+                <div class="contenedor_boton">
+                    <input name="email" type="email" placeholder="Correo electrónico " class="input_fomrulario contenedor_form " required >
+                     
+                </div>
+                <br>
+                <div class="contenedor_boton">
+                    <input name="nombre" type="text" placeholder="Nombre" class="input_fomrulario contenedor_form " required >
+                     
+                </div>
+              <br>
+                <div class="">                     
+                <input type="checkbox" id="empresas" value="empresas" name="empresas" class="input_fomrulario" >
+                <label for="empresas"> Empresas  | </label><br>
 
-            <div class="contenedor_boton">
-                <input type="email" placeholder="email" id="empresas" name="email" class="input_fomrulario" required>
-                <input type="text" placeholder="empresas" id="empresas" name="empresas" class="input_fomrulario" required>
-                <input type="text" placeholder="economia_negocios" id="economia_negocios" name="economia_negocios" class="input_fomrulario" required>
-                <input type="text" placeholder="actualidad" id="actualidad" name="actualidad" class="input_fomrulario" required>
-                <input type="text" placeholder="economia_finanzas" id="economia_finanzas" name="economia_finanzas" class="input_fomrulario" required>
-                <input type="text" placeholder="internacional" id="internacional" name="internacional" class="input_fomrulario" required>
-                <input type="text" placeholder="mujer_ejecutiva" id="mujer_ejecutiva" name="mujer_ejecutiva" class="input_fomrulario width_formulario_input" required>
+                <input type="checkbox" id="economia_negocios" value="economia_negocios" name="economia_negocios" class="input_fomrulario" >
+                <label for="economia_negocios"> Economia y Negocios  |</label><br>
+
+                <input type="checkbox" id="actualidad" value="actualidad" name="actualidad" class="input_fomrulario" >
+                <label for="actualidad"> Actualidad  |</label><br>
+
+                <input type="checkbox" id="economia_finanzas" value="economia_finanzas" name="economia_finanzas" class="input_fomrulario" >
+                <label for="Economia Finanzas"> Economia y Finanzas  |</label><br>
+
+                <input type="checkbox" id="internacional" value="internacional" name="internacional" class="input_fomrulario" >
+                <label for="Economia Finanzas"> Internacional |</label><br>
+
+                <input type="checkbox" id="mujer_ejecutiva" value="mujer_ejecutiva" name="mujer_ejecutiva" class="input_fomrulario" >
+                <label for="mujer_ejecutiva"> Mujer Ejecutiva |</label><br>
+                <input type="checkbox" id="politica" value="politica" name="politica" class="input_fomrulario" >
+                <label for="politica"> Politica |</label>
+                </div>
             </div>
 
             <div class="contenedor_boton" style="margin-bottom: 50px;">
                 <input type="submit" class="boton_formulario" value="Enviar">
             </div>
-
             <input type="hidden" placeholder="Evento" value="form_encuesta_news" name="evento" />
             <input type="hidden" name="token" value="25a91aa11d0443c1ace59204a43c71d8" />
             <input type="hidden" name="redir" value="https://cloudstorage.embluemail.com/clientes/Templates/redirec_forms.html" />
