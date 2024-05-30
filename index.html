@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .contenedor_formulario {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+        }
+        
+        .form {
+            width: 80%;
+            border-radius: 15px;
+            height: 80%;
+            background-color: #ffffff;
+            border: 1px #eeeeee solid;
+            box-shadow: 0px 0px 8px #00000050;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: space-between;
+            margin: 0%;
+        }
+        
+        .input_fomrulario {
+            border-radius: 10px;
+            border: 1px #cccccc solid;
+            width: 40%;
+            height: 30px;
+            color: #000000;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 15px;
+            background-color: #ffffff;
+        }
+        
+        .input_fomrulario:focus {
+            outline: none;
+            border: 1px #de0404 solid;
+        }
+        
+        .contenedor_boton {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            grid-gap: 20px 20px;
+        }
+        
+        .boton_formulario {
+            border: none;
+            background-color: #de0404;
+            width: auto;
+            height: auto;
+            padding: 10px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            color: #ffffff;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-transform: uppercase;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        
+        .boton_formulario:hover {
+            background-color: #b40101;
+        }
+        
+        .boton_formulario:active {
+            background-color: #7f0101;
+        }
+        
+        .select_formulario {
+            border-radius: 10px;
+            width: 20%;
+            height: 30px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            border: 1px #cccccc solid;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        .select_formulario:focus {
+            outline: none;
+            border: 2px #de0404 solid;
+        }
+        
+        .width_formulario_input {
+            width: calc(20% - 10px);
+        }
+        
+        .logo_imagen {
+            width: 20%;
+        }
+        
+        @media screen and (min-width: 0px) and (max-width: 600px) {
+            .form {
+                width: 90%;
+                height: 60%;
+                grid-gap: 10px 10px;
+            }
+            .input_fomrulario {
+                border-radius: 10px;
+                border: 1px #cccccc solid;
+                width: 30%;
+                height: 30px;
+            }
+            .input_fomrulario {
+                width: 42%;
+                height: 30px;
+            }
+            .select_formulario {
+                border-radius: 10px;
+                width: 40%;
+                height: 30px;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                font-size: 15px;
+                cursor: pointer;
+                border: 1px #cccccc solid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor_formulario">
+        <form method="POST" action="https://php.embluemail.com/Integraciones/form_events/emblue_events.php" class="form">
+
+            <div class="contenedor_boton" style="margin-top: 50px;">
+                <img src="https://mundoejecutivo.github.io/assets/images/mundo50negros.png" alt="Mundo Ejecutivo 50 años" title="Mundo Ejecutivo 50 años" class="logo_imagen">
+            </div>
+
+            <div class="contenedor_boton">
+                <input type="text" placeholder="empresas" id="empresas" name="empresas" class="input_fomrulario" required>
+                <input type="text" placeholder="economia_negocios" id="economia_negocios" name="economia_negocios" class="input_fomrulario" required>
+                <input type="text" placeholder="actualidad" id="actualidad" name="actualidad" class="input_fomrulario" required>
+                <input type="text" placeholder="economia_finanzas" id="economia_finanzas" name="economia_finanzas" class="input_fomrulario" required>
+                <input type="text" placeholder="internacional" id="internacional" name="internacional" class="input_fomrulario" required>
+                <input type="text" placeholder="mujer_ejecutiva" id="mujer_ejecutiva" name="mujer_ejecutiva" class="input_fomrulario width_formulario_input" required>
+            </div>
+
+            <div class="contenedor_boton" style="margin-bottom: 50px;">
+                <input type="submit" class="boton_formulario" value="Enviar">
+            </div>
+
+            <input type="hidden" name="token" value="25a91aa11d0443c1ace59204a43c71d8" />
+            <input type="hidden" name="redir" value="https://cloudstorage.embluemail.com/clientes/Templates/redirec_forms.html" />
+
+        </form>
+    </div>
+
+</body>
+
+</html>
