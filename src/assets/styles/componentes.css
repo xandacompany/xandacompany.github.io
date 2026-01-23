@@ -1,0 +1,92 @@
+.contenedor-formulario{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-content: start;
+    padding: 10px 15px;
+    gap: 15px 15px;
+}
+.input-buscador-componentes{
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px #25252575 solid;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    font-size: 15px;
+    transform: 0.25s;
+}
+.input-buscador-componentes:focus{
+    outline: #eae3ff 1px solid;
+}
+.contenedor-resultados{
+    width: 100%;
+    height: auto;
+    padding: 15px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 15px 15px;
+}
+.svg-resultados{
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+}
+.texto-sin-resultados{
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+.tarjeta-componentes{
+    width: 150px;
+    min-width: 150px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    background-color: #ffffff;
+    overflow: hidden;
+    gap: 15px 15px;
+    padding: 15px 15px;
+    border-radius: 15px;
+    transition: 0.25s;
+    /*cursor: pointer;*/
+}
+/*.tarjeta-componentes:hover{
+    box-shadow: 0px 0px 10px #00000025;
+}*/
+.tarjeta-componentes img{
+    width: 100%;
+}
+.tarjeta-componentes h4{
+    width: 100%;
+    text-align: center;
+    color: #252525;
+    text-transform: uppercase;
+    font-size: clamp(14px, 1.25vw, 17px);
+    font-weight: 600;
+}
+.boton-descargar-componente{
+    width: auto;
+    height: auto;
+    padding: 5px 10px;
+    background-color: #b3a0f2;
+    cursor: pointer;
+    transition: 0.25s;
+    text-transform: uppercase;
+    font-size: clamp(12px, 0.6vw, 14px);
+    font-weight: 600;
+    margin-top: 10px;
+}
+.svg-informacion-componente{
+    width: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.25s;
+}

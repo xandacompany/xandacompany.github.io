@@ -1,0 +1,20 @@
+{
+    "estructuras":[
+        {
+            "nombre": "General",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "/index.html",
+            "icono": "",
+            "estado": "sin"
+        },
+        {
+            "nombre": "Wordpress",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "/src/pages/plantillas.html",
+            "icono": "",
+            "estado": "sin"
+        }
+    ]
+}

@@ -1,0 +1,58 @@
+{
+    "componentes":[
+        {
+            "nombre": "Inicio",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "/index.html",
+            "icono": "<svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z\"/></svg>",
+            "estado": "sin"
+        },
+        {
+            "nombre": "Plantillas",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "/src/pages/plantillas.html",
+            "icono": "<svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z\"/></svg>",
+            "estado": "sin"
+        },
+        {
+            "nombre": "Componentes",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "/src/pages/componentes.html",
+            "icono": "<svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z\"/></svg>",
+            "estado": "sin"        },
+        {
+            "nombre": "Estructuras",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "/src/pages/estructuras.html",
+            "icono": "<svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z\"/></svg>",
+            "estado": "sin"        },
+        {
+            "nombre": "Mailing",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "as",
+            "icono": "<svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z\"/></svg>",
+            "estado": "sin"
+        },
+        {
+            "nombre": "Sitemap",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "as",
+            "icono": "<svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z\"/></svg>",
+            "estado": "sin"
+        },
+        {
+            "nombre": "Readme",
+            "descripcion": "",
+            "portada": "/src/assets/images/icons/logo.png",
+            "ruta": "as",
+            "icono": "<svg viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z\"/></svg>",
+            "estado": "sin"
+        }
+    ]
+}
