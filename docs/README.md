@@ -1,59 +1,151 @@
- 
-# XandA - Generador de Sitios Web
 
-**XandA** es un generador de sitios web de código libre desarrollador en python, cuyo propósito es generar estructuras de proyectos para facilitar el desarrollo de sitios web y así mejorar la productividad en cada proyecto. Dichas estructuras son fáciles de modificar, intuitivas y limpias, proporcionando al desarrollador un código y una jerarquía de carpetas bastante amigable.
+# Framework de Creación Rápida de Sitios Web
 
-----------------------------------------
+Este documento describe el marco de trabajo **"SitioWebGen"**, creado por **Asiel Jiménez**, que facilita la creación de un sitio web básico. Este framework automatiza la creación de la estructura de carpetas, subcarpetas y archivos necesarios para comenzar un proyecto web, ahorrando tiempo en la configuración inicial del mismo. 
 
-## Estrcutura del proyecto
-Se compone de tres carpetas y siete archivos en la raíz, los cuales cumplen funciones específicas dentro del proyecto, mientras que otros albergan subcarpetas como el caso de "src", cuyo contenido es alojar a "assets", "components", "config", "pages" y "utils" juntos a su respectivo contenido correspondiente:
+## ¿Qué es "SitioWebGen"?
 
-    ├── src/ # Código fuente principal
-    │ ├── assets/ # Recursos estáticos
-    │ │ ├── images/
-    │ │ │ ├── icons/
-    │ │ │ └── svg/
-    │ │ │ └── sprite.svg
-    │ │ ├── styles/
-    │ │ │ └── main.css # Estilos globales
-    │ │ └── scripts/
-    │ │ └── main.js # Scripts globales
-    │ ├── components/ # Componentes reutilizables
-    │ ├── config/ # Scripts de configuración
-    │ │ ├── purgar.py # Limpieza de archivos JS/CSS no usados
-    │ │ └── sitemap.py # Generación automática de sitemap.xml
-    │ ├── pages/ # Páginas HTML/PHP del sitio
-    │ │ ├── index.html
-    │ │ ├── contacto.html
-    │ │ ├── 404.html
-    │ │ └── ...
-    │ └── utils/ # Funciones auxiliares
-    │
-    ├── docs/ # Documentación
-    │ └── README.md
-    ├── test/ # Pruebas
-    │
-    ├── .htaccess
-    ├── .gitignore
-    ├── index.html
-    ├── LICENSE.txt
-    ├── manifest.json
-    ├── robots.txt
-    └── sitemap.xml
+"SitioWebGen" es un framework de Python diseñado para facilitar la creación de sitios web. Al ejecutar el archivo `framework.py`, el sistema automáticamente genera las siguientes carpetas y archivos:
 
-----------------------------------------
+- **Carpetas principales**: `assets`, `pages`, `docs`, `config`.
+- **Subcarpetas dentro de `assets`**: `images`, `json`, `styles`, `scripts`.
+- **Archivos de configuración y de contenido**: como `index.html`, `styles.css`, `manifest.json`, `robots.txt`, `sitemap.xml`, entre otros.
 
-## Carpetas, usos y archivos
+Este marco de trabajo está orientado a desarrolladores, diseñadores o cualquier persona que necesite crear un sitio web de manera rápida y estructurada. **El uso de este framework es libre, pero es obligatorio mencionar a Asiel Jiménez como autor y dar los créditos correspondientes si decides utilizarlo.**
 
-**config:**
-Alberga dos archivos importantes que deben ser ejecutados con extremo cuidado y cada uno aporta una función crucial al proyecto:
- - *sitemap.py:* Anlaiza el contenido de la carpeta "pages" todos los archivos .html y .php los agrega al sitemap.xml. En el caso de haber eliminado un archivo y este ya había sido previamente cargado al sitemap.xml, el archivo sitemap.py es capaz de identificar si un archivo ya no se encuentra dentro de esa carpeta y lo elimina del sitemap.xml
- - *purgar.py:* Este debe ser ejecutado únicamente al final del proyecto, cuando este esté terminado y listo para ser publicado. Su objetivo es analizar los archivos .html y .php de la raíz junto a los alojados en la carpeta "pages", este detectará que archivos .css y .js fueron utilizados de las carpetas "styles", "scripts" y "components" para posteriormente eliminar los archivos que no fueron ocupados, esto con la finalidad de ahorrar espacio y evitar la cargar de archivos innecesarios y proporcionar un código más limpo.
+## Estructura de Carpetas y Archivos Generados
 
-**components:**
-Los archivos de esta carpeta tienen como fin proporcionar componentes que pueden ser utilizados en páginas .html y .php, algunos de ellos son menús, secciones, formularios, etc. La forma de cargar un componente es mandarlo a llamar con un "<scripts src="./src/components/componente.js"></scripts>", porteriormente necesitarás insertar esto en tu etiquetado .html o tu código .php "". No obstante, dentro de cada componente hay un comentario que te explicará como mandarlo a llamar.
+### 1. **Carpetas Principales**
 
-**sprite.svg**
-El archivo sprite.svg está alojado dentro de la carpeta "svg" y su función es almacenar bastantes .svg en un solo archivo, con la finalidad de ser mandados a llamar a través de la sintaxis "xlink:href" y así ahorrar tiempo, redundancia y peso a los archivos que requieran de estos respectivos .svg
+Al ejecutar el archivo `framework.py`, se generan las siguientes carpetas principales en la raíz del proyecto:
 
-----------------------------------------
+- **assets**: Carpeta destinada a los recursos estáticos del sitio web (imágenes, estilos, scripts, archivos JSON).
+- **pages**: Carpeta para alojar las páginas HTML del sitio web.
+- **docs**: Carpeta para documentación del proyecto, como el archivo `README.md` y otros documentos técnicos.
+- **config**: Carpeta para la configuración y el código auxiliar (en este caso, contiene el archivo `pages.py`).
+
+### 2. **Subcarpetas dentro de `assets`**
+
+Dentro de la carpeta `assets`, se crean las siguientes subcarpetas:
+
+- **images**: Destinada a contener las imágenes del sitio web.
+- **json**: Para archivos JSON, como un posible archivo `package.json` o configuraciones adicionales.
+- **styles**: Carpeta para los archivos de estilo CSS. El archivo `main.css` es creado con estilos básicos.
+- **scripts**: Carpeta para los archivos JavaScript. El archivo `main.js` es creado con un script básico que imprime un mensaje en la consola.
+
+### 3. **Archivos Generados**
+
+A continuación se detalla el contenido de los archivos generados:
+
+#### **index.html**
+Este archivo es la página principal del sitio web. Contiene la estructura básica de una página HTML con un título y un encabezado.
+
+```html
+<html>
+<head>
+  <title>Inicio del Proyecto</title>
+</head>
+<body>
+  <h1>Bienvenido a mi proyecto</h1>
+</body>
+</html>
+```
+
+#### **styles.css**
+Este archivo contiene estilos básicos para la página web, como la definición de la fuente para el cuerpo de la página.
+
+```css
+/* Estilos generales para la página */
+body {
+  font-family: Arial, sans-serif;
+}
+```
+
+#### **manifest.json**
+Este archivo JSON contiene los metadatos del proyecto, lo que lo hace adecuado para aplicaciones web progresivas (PWA). Define el nombre del proyecto, la URL de inicio, el color de fondo, entre otras configuraciones.
+
+```json
+{
+  "name": "Proyecto Web",
+  "short_name": "Proyecto",
+  "description": "Descripción del proyecto",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
+}
+```
+
+#### **licence.txt**
+El archivo de licencia en formato de texto. El proyecto está bajo la Licencia MIT, que permite usar, modificar y distribuir el código, siempre que se mencione a Asiel Jiménez como autor.
+
+```txt
+Licencia MIT
+
+Este proyecto está bajo la Licencia MIT. Puedes utilizarlo, modificarlo y distribuirlo bajo los términos de dicha licencia.
+```
+
+#### **sitemap.xml**
+Este archivo XML es utilizado por los motores de búsqueda para saber cuáles son las URLs más importantes del sitio. Contiene información sobre las URLs del sitio web y su prioridad de indexación.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.tusitio.com/</loc>
+    <lastmod>2025-01-17</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.tusitio.com/about</loc>
+    <lastmod>2025-01-17</lastmod>
+    <priority>0.8</priority>
+  </url>
+</urlset>
+```
+
+#### **README.md**
+Este archivo contiene una breve descripción de tu proyecto y cómo configurarlo. Este es el archivo donde puedes documentar los detalles sobre tu sitio web, tecnologías usadas y cualquier otra información relevante.
+
+#### **framework.md**
+Este archivo es crucial para entender el funcionamiento del framework y cómo personalizarlo para tus necesidades. Aquí es donde explico cómo ejecutar el script framework.py, qué carpetas y archivos se generarán y cómo puedes empezar a trabajar con el proyecto.
+
+#### **404.html**
+Este es el archivo HTML que se muestra cuando un usuario accede a una página que no existe. Contiene una estructura básica de una página 404 con enlaces a otras partes del sitio.
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404</title>
+  <link rel="stylesheet" href="../assets/styles/main.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2>SUBTITULO</h2>
+    </section>
+    <section>
+      <h2>SUBTITULO</h2>
+    </section>
+    <section>
+      <h2>SUBTITULO</h2>
+    </section>
+  </main>
+  <footer></footer>
+  <script src="../assets/scripts/main.js"></script>
+</body>
+</html>
+```

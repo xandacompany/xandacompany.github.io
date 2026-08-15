@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lightbox — Simulador de diseño responsivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#F3F1FB;
+    --panel:#FFFFFF;
+    --panel-2:#F4F2FB;
+    --line:#E4E1F3;
+    --line-soft:#ECEAF7;
+    --text:#15141F;
+    --muted:#6B6E82;
+    --muted-2:#9C9FB2;
+    --purple:#5B4BF5;
+    --purple-deep:#4338CA;
+    --purple-dim:rgba(91,75,245,0.10);
+    --metal-1:#3A3E48;
+    --metal-2:#232630;
+    --metal-3:#16181F;
+    --radius-lg:22px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    background:var(--void);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    overflow:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001s !important; transition-duration:0.001s !important;}
+  }
+
+  .app{
+    display:grid;
+    grid-template-columns:296px 1fr;
+    height:100vh;
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar{
+    background:var(--panel);
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    padding:26px 22px;
+    overflow-y:auto;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:28px;
+  }
+  .brand .dot{
+    width:10px; height:10px; border-radius:50%;
+    background:linear-gradient(135deg, var(--purple), var(--purple-deep));
+    box-shadow:0 0 10px 2px var(--purple-dim), 0 0 0 4px rgba(91,75,245,0.07);
+    flex-shrink:0;
+  }
+  .brand h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:17px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .brand p{
+    font-size:10.5px;
+    color:var(--muted-2);
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.03em;
+    margin-top:1px;
+  }
+
+  .field-label{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    color:var(--muted-2);
+    font-weight:600;
+    margin-bottom:9px;
+    display:block;
+  }
+
+  .url-block{ margin-bottom:26px; }
+  .url-row{
+    display:flex;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:11px;
+    overflow:hidden;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .url-row:focus-within{
+    border-color:rgba(91,75,245,0.55);
+    box-shadow:0 0 0 3px var(--purple-dim);
+  }
+  .url-row input{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--text);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    padding:11px 12px;
+    min-width:0;
+  }
+  .url-row input::placeholder{ color:var(--muted-2); }
+  .url-row button{
+    background:linear-gradient(135deg, var(--purple), var(--purple-deep));
+    color:#fff;
+    border:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    padding:0 16px;
+    cursor:pointer;
+    transition:filter .15s ease;
+    flex-shrink:0;
+  }
+  .url-row button:hover{ filter:brightness(1.08); }
+  .url-hint{
+    font-size:10.5px;
+    color:var(--muted-2);
+    margin-top:8px;
+    line-height:1.5;
+  }
+
+  .cat-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:16px;
+  }
+  .cat-tab{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--muted);
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:500;
+    padding:6px 11px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .cat-tab:hover{ color:var(--text); border-color:#CFCBE8; }
+  .cat-tab.active{
+    background:linear-gradient(135deg, var(--purple), var(--purple-deep));
+    border-color:var(--purple);
+    color:#fff;
+    font-weight:600;
+  }
+
+  .cat-section{ margin-bottom:4px; }
+  .cat-heading{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    color:var(--muted-2);
+    font-weight:600;
+    padding:14px 4px 7px;
+  }
+  .cat-heading:first-child{ padding-top:2px; }
+
+  .brand-block{ margin-bottom:2px; }
+  .brand-heading{
+    display:flex; align-items:center; gap:8px;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--purple-deep);
+    font-weight:700;
+    padding:14px 4px 7px;
+  }
+  .brand-heading:first-child{ padding-top:2px; }
+  .brand-heading::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  .device-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-bottom:8px;
+  }
+  .device-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:transparent;
+    border:1px solid transparent;
+    border-radius:11px;
+    padding:10px 11px;
+    cursor:pointer;
+    text-align:left;
+    color:var(--text);
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .device-item:hover{ background:var(--panel-2); }
+  .device-item.active{
+    background:var(--purple-dim);
+    border-color:rgba(91,75,245,0.35);
+  }
+  .device-item .icon{
+    width:34px; height:34px;
+    flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:9px;
+    color:var(--muted);
+  }
+  .device-item.active .icon{ color:var(--purple); border-color:rgba(91,75,245,0.35); }
+  .device-item svg{ width:18px; height:18px; }
+  .device-item .meta{ display:flex; flex-direction:column; min-width:0; }
+  .device-item .meta strong{ font-size:13px; font-weight:600; }
+  .device-item .meta .sub{
+    display:flex; align-items:center; gap:5px;
+    font-size:10.5px;
+    color:var(--muted);
+    font-family:'JetBrains Mono', monospace;
+    margin-top:1px;
+  }
+  .device-item .meta .brand-tag{
+    font-family:'Inter', sans-serif;
+    font-size:9.5px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--purple-deep);
+    background:var(--purple-dim);
+    padding:1px 6px;
+    border-radius:5px;
+  }
+
+  .sidebar-footer{
+    margin-top:auto;
+    padding-top:20px;
+    border-top:1px solid var(--line-soft);
+    font-size:10.5px;
+    color:var(--muted-2);
+    line-height:1.6;
+  }
+
+  /* ============ STAGE ============ */
+  .stage{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 600px at 50% 38%, rgba(91,75,245,0.07), transparent 60%),
+      var(--void);
+  }
+  .stage::before{
+    content:'';
+    position:absolute; inset:0;
+    background-image:radial-gradient(rgba(60,50,110,0.06) 1px, transparent 1px);
+    background-size:26px 26px;
+    pointer-events:none;
+  }
+
+  .topbar{
+    position:relative;
+    z-index:5;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 26px;
+    border-bottom:1px solid var(--line-soft);
+    background:rgba(255,255,255,0.55);
+    backdrop-filter:blur(10px);
+  }
+  .topbar .info{ display:flex; align-items:baseline; gap:10px; }
+  .topbar .info h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    font-weight:600;
+  }
+  .topbar .info span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+  .topbar .actions{ display:flex; align-items:center; gap:8px; }
+
+  .chip-btn{
+    display:flex; align-items:center; gap:6px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    border-radius:9px;
+    padding:7px 11px;
+    font-family:'Inter', sans-serif;
+    font-size:12px;
+    font-weight:500;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .chip-btn:hover{ background:#EAE7F7; border-color:#CFCBE8; }
+  .chip-btn svg{ width:14px; height:14px; }
+  .zoom-group{
+    display:flex; align-items:center;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:9px;
+    overflow:hidden;
+  }
+  .zoom-group button{
+    background:transparent; border:none; color:var(--text);
+    width:30px; height:30px; cursor:pointer; font-size:15px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .zoom-group button:hover{ background:#EAE7F7; }
+  .zoom-group .val{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    padding:0 8px;
+    min-width:44px;
+    text-align:center;
+  }
+
+  .frame-wrap{
+    position:relative;
+    z-index:2;
+    height:calc(100vh - 63px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px;
+  }
+
+  #stageInner{
+    position:relative;
+    transform-origin:center center;
+    transition:transform .28s cubic-bezier(.2,.7,.3,1);
+  }
+
+  .glow{
+    position:absolute;
+    left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(91,75,245,0.20), transparent 70%);
+    filter:blur(50px);
+    z-index:0;
+    animation:pulse 5s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:0.7; }
+    50%{ opacity:1; }
+  }
+
+  .device-frame{
+    position:relative;
+    z-index:1;
+  }
+  .screen{
+    position:relative;
+    overflow:hidden;
+    background:#0b0c0f;
+  }
+  .screen iframe{
+    width:100%; height:100%;
+    border:none;
+    background:#fff;
+    display:block;
+  }
+  .screen .placeholder{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:10px;
+    background:linear-gradient(160deg, #14151b, #0b0c0f);
+    color:var(--muted-2);
+    text-align:center;
+    padding:24px;
+  }
+  .screen .placeholder svg{ width:28px; height:28px; opacity:0.5; }
+  .screen .placeholder p{ font-size:12px; font-family:'JetBrains Mono', monospace; max-width:220px; line-height:1.6; }
+
+  /* ---- PHONE ---- */
+  .device-frame.phone{
+    width:calc(var(--w) * 1px + 28px);
+    height:calc(var(--h) * 1px + 28px);
+    background:linear-gradient(160deg, var(--metal-1), var(--metal-3));
+    border-radius:56px;
+    padding:14px;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .device-frame.phone .screen{
+    width:100%; height:100%;
+    border-radius:42px;
+  }
+  .device-frame.phone .island{
+    position:absolute;
+    top:20px; left:50%; transform:translateX(-50%);
+    width:90px; height:26px;
+    background:#000;
+    border-radius:20px;
+    z-index:3;
+  }
+  .device-frame.phone .btn{
+    position:absolute;
+    background:var(--metal-2);
+    border-radius:3px;
+  }
+  .device-frame.phone .btn.power{ right:-3px; top:120px; width:3px; height:60px; }
+  .device-frame.phone .btn.vol1{ left:-3px; top:100px; width:3px; height:32px; }
+  .device-frame.phone .btn.vol2{ left:-3px; top:140px; width:3px; height:32px; }
+
+  /* ---- LAPTOP ---- */
+  .device-frame.laptop{ display:flex; flex-direction:column; align-items:center; }
+  .laptop .lid{
+    width:calc(var(--w) * 1px + 26px);
+    height:calc(var(--h) * 1px + 16px);
+    background:linear-gradient(170deg, var(--metal-1), var(--metal-3));
+    border-radius:16px 16px 4px 4px;
+    padding:9px 13px 7px;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05);
+    position:relative;
+  }
+  .laptop .lid::before{
+    content:'';
+    position:absolute; top:2px; left:50%; transform:translateX(-50%);
+    width:6px; height:6px; border-radius:50%;
+    background:#000;
+    box-shadow:0 0 0 2px rgba(255,255,255,0.03);
+  }
+  .laptop .screen{ width:100%; height:100%; border-radius:3px; }
+  .laptop .hinge{
+    width:calc(var(--w) * 1px + 26px);
+    height:9px;
+    background:linear-gradient(180deg, #101218, #05060a);
+  }
+  .laptop .base{
+    width:calc(var(--w) * 1px + 96px);
+    height:16px;
+    background:linear-gradient(180deg, var(--metal-1), var(--metal-2));
+    clip-path:polygon(2% 0, 98% 0, 100% 100%, 0% 100%);
+    position:relative;
+    box-shadow:0 14px 26px -10px rgba(0,0,0,0.6);
+  }
+  .laptop .base::before{
+    content:'';
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:120px; height:5px;
+    background:#05060a;
+    border-radius:0 0 8px 8px;
+  }
+
+  /* ---- DESKTOP ---- */
+  .device-frame.desktop{ display:flex; flex-direction:column; align-items:center; }
+  .desktop .monitor{
+    width:calc(var(--w) * 1px + 40px);
+    height:calc(var(--h) * 1px + 74px);
+    background:linear-gradient(165deg, var(--metal-1), var(--metal-3));
+    border-radius:16px;
+    padding:20px 20px 54px;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05);
+    position:relative;
+  }
+  .desktop .monitor::after{
+    content:'';
+    position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+    width:9px; height:9px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #7a5138, #3a2214);
+  }
+  .desktop .screen{ width:100%; height:100%; border-radius:2px; }
+  .desktop .neck{
+    width:64px; height:64px;
+    background:linear-gradient(180deg, var(--metal-1), var(--metal-2));
+    margin-top:-2px;
+  }
+  .desktop .base{
+    width:280px; height:14px;
+    border-radius:10px;
+    background:linear-gradient(180deg, var(--metal-1), var(--metal-2));
+    box-shadow:0 16px 30px -10px rgba(0,0,0,0.65);
+  }
+
+  /* ---- TV ---- */
+  .device-frame.tv{ display:flex; flex-direction:column; align-items:center; }
+  .tv .panel{
+    width:calc(var(--w) * 1px + 16px);
+    height:calc(var(--h) * 1px + 16px);
+    background:linear-gradient(160deg, #202329, #101216);
+    border-radius:7px;
+    padding:8px;
+    box-shadow:0 40px 90px -25px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.04);
+  }
+  .tv .screen{ width:100%; height:100%; border-radius:1px; }
+  .tv .stand-row{ display:flex; gap:calc(var(--w) * 1px * 0.55); margin-top:2px; }
+  .tv .foot{
+    width:14px; height:34px;
+    background:linear-gradient(180deg, var(--metal-1), var(--metal-2));
+    border-radius:0 0 4px 4px;
+    transform:perspective(60px) rotateX(6deg);
+  }
+
+  /* ---- WATCH ---- */
+  .device-frame.watch{ display:flex; flex-direction:column; align-items:center; }
+  .watch .band{
+    width:calc(var(--w) * 1px * 0.62);
+    height:34px;
+    background:linear-gradient(180deg, #26282f, #16171b);
+    border-radius:12px 12px 0 0;
+  }
+  .watch .case{
+    width:calc(var(--w) * 1px + 22px);
+    height:calc(var(--h) * 1px + 22px);
+    background:linear-gradient(160deg, var(--metal-1), var(--metal-3));
+    border-radius:46px;
+    padding:11px;
+    position:relative;
+    box-shadow:0 30px 60px -18px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .watch .screen{ width:100%; height:100%; border-radius:36px; }
+  .watch .crown{
+    position:absolute; right:-6px; top:38%;
+    width:8px; height:22px;
+    border-radius:3px;
+    background:linear-gradient(90deg, var(--metal-1), var(--metal-3));
+  }
+  .watch .side-btn{
+    position:absolute; right:-5px; top:62%;
+    width:6px; height:16px;
+    border-radius:3px;
+    background:linear-gradient(90deg, var(--metal-1), var(--metal-3));
+  }
+  .watch .band.bottom{ border-radius:0 0 12px 12px; }
+
+  /* ---- WATCH ROUND (Samsung / Google) ---- */
+  .device-frame.watch-round{ display:flex; flex-direction:column; align-items:center; }
+  .watch-round .band{
+    width:calc(var(--w) * 1px * 0.5);
+    height:30px;
+    background:linear-gradient(180deg, #26282f, #16171b);
+    border-radius:10px 10px 0 0;
+  }
+  .watch-round .band.bottom{ border-radius:0 0 10px 10px; }
+  .watch-round .case{
+    width:calc(var(--w) * 1px + 22px);
+    height:calc(var(--h) * 1px + 22px);
+    background:linear-gradient(160deg, var(--metal-1), var(--metal-3));
+    border-radius:50%;
+    padding:11px;
+    position:relative;
+    box-shadow:0 30px 60px -18px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .watch-round .screen{ width:100%; height:100%; border-radius:50%; }
+  .watch-round .crown{
+    position:absolute; right:-6px; top:42%;
+    width:8px; height:18px;
+    border-radius:3px;
+    background:linear-gradient(90deg, var(--metal-1), var(--metal-3));
+  }
+  .watch-round .side-btn{
+    position:absolute; right:-5px; top:60%;
+    width:6px; height:14px;
+    border-radius:3px;
+    background:linear-gradient(90deg, var(--metal-1), var(--metal-3));
+  }
+
+  ::-webkit-scrollbar{ width:9px; height:9px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{ background:#D9D6EC; border-radius:6px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="dot"></span>
+      <div>
+        <h1>XandA - Visor</h1>
+        <p>SIMULADOR RESPONSIVO</p>
+      </div>
+    </div>
+
+    <div class="url-block">
+      <label class="field-label">Sitio a probar</label>
+      <div class="url-row">
+        <input id="urlInput" type="text" placeholder="tusitio.com" value="">
+        <button id="loadBtn">Cargar</button>
+      </div>
+      <p class="url-hint">Algunos sitios impiden mostrarse dentro de otra página (X-Frame-Options). Si la pantalla queda en blanco, prueba con otro dominio.</p>
+    </div>
+
+    <label class="field-label">Dispositivos</label>
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="device-list" id="deviceList"></div>
+
+    <div class="sidebar-footer">
+      El marco se ajusta automáticamente al tamaño de tu ventana.<br>
+      Usa el zoom del panel superior para ver el detalle.
+    </div>
+  </aside>
+
+  <!-- ============ STAGE ============ -->
+  <main class="stage">
+    <div class="topbar">
+      <div class="info">
+        <h2 id="deviceName">—</h2>
+        <span id="deviceDims">—</span>
+      </div>
+      <div class="actions">
+        <button class="chip-btn" id="rotateBtn" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.2v-2a4 4 0 0 1 4-4h12.8M7 21.9l-4-4 4-4"/><path d="M21 11.8v2a4 4 0 0 1-4 4H4.2"/></svg>
+          Rotar
+        </button>
+        <div class="zoom-group">
+          <button id="zoomOut">−</button>
+          <span class="val" id="zoomVal">100%</span>
+          <button id="zoomIn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame-wrap">
+      <div id="stageInner">
+        <div class="glow" id="glowEl"></div>
+        <div id="frameSlot"></div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+  const typeIcons = {
+    phone:'<rect x="6" y="2" width="12" height="20" rx="3"/><line x1="9" y1="18.5" x2="15" y2="18.5"/>',
+    laptop:'<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M2 19h20l-1.5-3h-17z"/>',
+    desktop:'<rect x="3" y="3" width="18" height="12" rx="1.5"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="15" x2="12" y2="21"/>',
+    watch:'<rect x="7" y="8" width="10" height="8" rx="2.5"/><path d="M9 8V5.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V8"/><path d="M9 16v2.5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V16"/>',
+    'watch-round':'<circle cx="12" cy="12" r="6.5"/><path d="M9 8V5.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V8"/><path d="M9 16v2.5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V16"/>',
+    tv:'<rect x="2" y="4" width="20" height="12" rx="1.5"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/>'
+  };
+
+  const categories = [
+    { id:'all', label:'Todos' },
+    { id:'generic', label:'Genéricos' },
+    { id:'phone', label:'Celulares' },
+    { id:'computer', label:'Computadoras' },
+    { id:'watch', label:'Relojes' }
+  ];
+
+  const devices = [
+    // ---- GENÉRICOS ----
+    { id:'gen-phone', name:'Celular genérico', category:'generic', type:'phone', w:390, h:844, glow:210 },
+    { id:'gen-laptop', name:'Laptop genérica', category:'generic', type:'laptop', w:1280, h:800, glow:260 },
+    { id:'gen-desktop', name:'Computadora genérica', category:'generic', type:'desktop', w:1600, h:900, glow:280 },
+    { id:'gen-watch', name:'Reloj genérico', category:'generic', type:'watch', w:198, h:242, glow:180 },
+    { id:'gen-tv', name:'Televisor', category:'generic', type:'tv', w:1600, h:900, glow:320 },
+
+    // ---- CELULARES ----
+    { id:'iphone-15-pro-max', name:'iPhone 15 Pro Max', brand:'Apple', category:'phone', type:'phone', w:430, h:932, glow:220 },
+    { id:'iphone-15', name:'iPhone 15', brand:'Apple', category:'phone', type:'phone', w:393, h:852, glow:210 },
+    { id:'iphone-se', name:'iPhone SE', brand:'Apple', category:'phone', type:'phone', w:375, h:667, glow:200 },
+    { id:'galaxy-s24-ultra', name:'Galaxy S24 Ultra', brand:'Samsung', category:'phone', type:'phone', w:384, h:824, glow:210 },
+    { id:'galaxy-s23', name:'Galaxy S23', brand:'Samsung', category:'phone', type:'phone', w:360, h:780, glow:205 },
+    { id:'pixel-8-pro', name:'Pixel 8 Pro', brand:'Google', category:'phone', type:'phone', w:412, h:892, glow:215 },
+
+    // ---- COMPUTADORAS ----
+    { id:'macbook-air-13', name:'MacBook Air 13"', brand:'Apple', category:'computer', type:'laptop', w:1280, h:832, glow:260 },
+    { id:'macbook-pro-14', name:'MacBook Pro 14"', brand:'Apple', category:'computer', type:'laptop', w:1512, h:982, glow:270 },
+    { id:'macbook-pro-16', name:'MacBook Pro 16"', brand:'Apple', category:'computer', type:'laptop', w:1728, h:1117, glow:280 },
+    { id:'imac-24', name:'iMac 24"', brand:'Apple', category:'computer', type:'desktop', w:2240, h:1260, glow:300 },
+    { id:'galaxy-book4', name:'Galaxy Book4', brand:'Samsung', category:'computer', type:'laptop', w:1920, h:1080, glow:275 },
+    { id:'pixelbook', name:'Pixelbook Go', brand:'Google', category:'computer', type:'laptop', w:1366, h:768, glow:255 },
+
+    // ---- RELOJES ----
+    { id:'apple-watch-41', name:'Apple Watch 41mm', brand:'Apple', category:'watch', type:'watch', w:176, h:215, glow:170 },
+    { id:'apple-watch-45', name:'Apple Watch 45mm', brand:'Apple', category:'watch', type:'watch', w:198, h:242, glow:180 },
+    { id:'galaxy-watch6', name:'Galaxy Watch6', brand:'Samsung', category:'watch', type:'watch-round', w:212, h:212, glow:175 },
+    { id:'pixel-watch-2', name:'Pixel Watch 2', brand:'Google', category:'watch', type:'watch-round', w:190, h:190, glow:165 }
+  ];
+
+  let currentDevice = { ...devices[0] };
+  let currentUrl = '';
+  let zoomMultiplier = 1;
+  let activeCategory = 'all';
+
+  const catTabsEl = document.getElementById('catTabs');
+  const deviceListEl = document.getElementById('deviceList');
+  const frameSlot = document.getElementById('frameSlot');
+  const stageInner = document.getElementById('stageInner');
+  const glowEl = document.getElementById('glowEl');
+  const frameWrap = document.querySelector('.frame-wrap');
+  const deviceNameEl = document.getElementById('deviceName');
+  const deviceDimsEl = document.getElementById('deviceDims');
+  const rotateBtn = document.getElementById('rotateBtn');
+  const zoomVal = document.getElementById('zoomVal');
+  const urlInput = document.getElementById('urlInput');
+
+  function buildCatTabs(){
+    catTabsEl.innerHTML = categories.map(c => `
+      <button class="cat-tab ${c.id === activeCategory ? 'active' : ''}" data-cat="${c.id}">${c.label}</button>
+    `).join('');
+
+    catTabsEl.querySelectorAll('.cat-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.dataset.cat;
+        buildCatTabs();
+        buildDeviceList();
+      });
+    });
+  }
+
+  function deviceItemHTML(d){
+    return `
+      <button class="device-item ${d.id === currentDevice.id ? 'active' : ''}" data-id="${d.id}">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${typeIcons[d.type]}</svg></span>
+        <span class="meta">
+          <strong>${d.name}</strong>
+          <span class="sub">${d.brand ? `<span class="brand-tag">${d.brand}</span>` : ''}${d.w} × ${d.h}</span>
+        </span>
+      </button>`;
+  }
+
+  const BRAND_ORDER = ['Apple', 'Samsung', 'Google'];
+
+  function sortedBrands(items){
+    const present = [...new Set(items.map(d => d.brand).filter(Boolean))];
+    return present.sort((a, b) => {
+      const ia = BRAND_ORDER.indexOf(a), ib = BRAND_ORDER.indexOf(b);
+      if(ia === -1 && ib === -1) return a.localeCompare(b);
+      if(ia === -1) return 1;
+      if(ib === -1) return -1;
+      return ia - ib;
+    });
+  }
+
+  function buildDeviceList(){
+    if(activeCategory === 'all'){
+      deviceListEl.innerHTML = categories.filter(c => c.id !== 'all').map(c => {
+        const items = devices.filter(d => d.category === c.id);
+        if(!items.length) return '';
+        return `<div class="cat-section">
+          <div class="cat-heading">${c.label}</div>
+          ${items.map(deviceItemHTML).join('')}
+        </div>`;
+      }).join('');
+    } else {
+      const items = devices.filter(d => d.category === activeCategory);
+      const brands = sortedBrands(items);
+
+      if(!brands.length){
+        // Sin marcas (p. ej. Genéricos): lista simple
+        deviceListEl.innerHTML = items.map(deviceItemHTML).join('');
+      } else {
+        deviceListEl.innerHTML = brands.map(brand => `
+          <div class="brand-block">
+            <div class="brand-heading">${brand}</div>
+            ${items.filter(d => d.brand === brand).map(deviceItemHTML).join('')}
+          </div>
+        `).join('');
+      }
+    }
+
+    deviceListEl.querySelectorAll('.device-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const d = devices.find(x => x.id === btn.dataset.id);
+        currentDevice = { ...d };
+        buildDeviceList();
+        renderDevice();
+      });
+    });
+  }
+
+  function frameMarkup(d){
+    const screenContent = currentUrl
+      ? `<iframe src="${currentUrl}" loading="lazy"></iframe>`
+      : `<div class="placeholder">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+           <p>Escribe una URL y presiona “Cargar” para ver tu sitio aquí</p>
+         </div>`;
+
+    switch(d.type){
+      case 'phone':
+        return `<div class="device-frame phone" style="--w:${d.w};--h:${d.h}">
+          <div class="btn power"></div><div class="btn vol1"></div><div class="btn vol2"></div>
+          <div class="island"></div>
+          <div class="screen">${screenContent}</div>
+        </div>`;
+      case 'laptop':
+        return `<div class="device-frame laptop">
+          <div class="lid" style="--w:${d.w};--h:${d.h}"><div class="screen">${screenContent}</div></div>
+          <div class="hinge" style="--w:${d.w}"></div>
+          <div class="base" style="--w:${d.w}"></div>
+        </div>`;
+      case 'desktop':
+        return `<div class="device-frame desktop">
+          <div class="monitor" style="--w:${d.w};--h:${d.h}"><div class="screen">${screenContent}</div></div>
+          <div class="neck"></div>
+          <div class="base"></div>
+        </div>`;
+      case 'tv':
+        return `<div class="device-frame tv">
+          <div class="panel" style="--w:${d.w};--h:${d.h}"><div class="screen">${screenContent}</div></div>
+          <div class="stand-row" style="--w:${d.w}"><div class="foot"></div><div class="foot"></div></div>
+        </div>`;
+      case 'watch':
+        return `<div class="device-frame watch">
+          <div class="band top"></div>
+          <div class="case" style="--w:${d.w};--h:${d.h}">
+            <div class="crown"></div><div class="side-btn"></div>
+            <div class="screen">${screenContent}</div>
+          </div>
+          <div class="band bottom"></div>
+        </div>`;
+      case 'watch-round':
+        return `<div class="device-frame watch-round">
+          <div class="band top"></div>
+          <div class="case" style="--w:${d.w};--h:${d.h}">
+            <div class="crown"></div><div class="side-btn"></div>
+            <div class="screen">${screenContent}</div>
+          </div>
+          <div class="band bottom"></div>
+        </div>`;
+    }
+  }
+
+  function renderDevice(){
+    frameSlot.innerHTML = frameMarkup(currentDevice);
+
+    glowEl.style.width = currentDevice.glow + 'px';
+    glowEl.style.height = currentDevice.glow + 'px';
+
+    deviceNameEl.textContent = currentDevice.name;
+    deviceDimsEl.textContent = `${currentDevice.w} × ${currentDevice.h} px`;
+    rotateBtn.style.display = currentDevice.type === 'phone' ? 'flex' : 'none';
+
+    requestAnimationFrame(fitStage);
+  }
+
+  function fitStage(){
+    const availW = frameWrap.clientWidth - 40;
+    const availH = frameWrap.clientHeight - 40;
+    const rect = frameSlot.querySelector('.device-frame').getBoundingClientRect();
+    // account for current transform scale to get natural size
+    const currentScale = parseFloat(stageInner.dataset.scale || '1');
+    const naturalW = rect.width / currentScale;
+    const naturalH = rect.height / currentScale;
+
+    const fitScale = Math.min(availW / naturalW, availH / naturalH, 1);
+    const finalScale = Math.max(fitScale * zoomMultiplier, 0.12);
+
+    stageInner.style.transform = `scale(${finalScale})`;
+    stageInner.dataset.scale = finalScale;
+    zoomVal.textContent = Math.round(finalScale * 100) + '%';
+  }
+
+  document.getElementById('loadBtn').addEventListener('click', loadUrl);
+  urlInput.addEventListener('keydown', e => { if(e.key === 'Enter') loadUrl(); });
+
+  function loadUrl(){
+    let val = urlInput.value.trim();
+    if(!val) return;
+    if(!/^https?:\/\//i.test(val)) val = 'https://' + val;
+    currentUrl = val;
+    renderDevice();
+  }
+
+  rotateBtn.addEventListener('click', () => {
+    const w = currentDevice.w;
+    currentDevice.w = currentDevice.h;
+    currentDevice.h = w;
+    renderDevice();
+    buildDeviceList();
+  });
+
+  document.getElementById('zoomIn').addEventListener('click', () => {
+    zoomMultiplier = Math.min(zoomMultiplier + 0.15, 3);
+    fitStage();
+  });
+  document.getElementById('zoomOut').addEventListener('click', () => {
+    zoomMultiplier = Math.max(zoomMultiplier - 0.15, 0.2);
+    fitStage();
+  });
+
+  window.addEventListener('resize', fitStage);
+
+  buildCatTabs();
+  buildDeviceList();
+  renderDevice();
+</script>
+
+</body>
+</html>
